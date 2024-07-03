@@ -1,0 +1,52 @@
+.container {
+  background-color: #2c2f33;
+  width: 348px;
+  height: 208px;
+  border-radius: 8px;
+}
+.header-content {
+  justify-content: space-between;
+}
+
+.section-1 {
+  width: 316px;
+  display: flex;
+  justify-content: space-between;
+}
+.dueDate-content {
+  display: flex;
+  width: auto;
+  height: 24px;
+  padding: 5px 15px 4px 0px;
+
+  gap: 8px;
+  border-radius: 5px;
+  justify-content: end;
+  background-color: #94979a1a;
+}
+
+.status-card {
+  display: flex;
+  width: auto;
+  height: 24px;
+  padding: 5px;
+  border-radius: 5px;
+  justify-content: end;
+  background-color: #94979a1a;
+}
+.status-cotainer {
+  display: flex;
+  gap: 3px;
+}
+
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+
+mat-card {
+  margin: 8px;
+}

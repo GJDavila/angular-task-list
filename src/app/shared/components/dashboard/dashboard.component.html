@@ -1,0 +1,55 @@
+<div class="container">
+
+  <input class="search-input" [(ngModel)]="searchQuery" (keydown.enter)="onSearch()">
+  <div class="button-options">
+
+    <mat-toolbar class="menu-options">
+      <button mat-icon-button (click)="toggleView('list')" [class.active]="currentView === 'list'">
+        <mat-icon>view_list</mat-icon>
+      </button>
+      <button mat-icon-button (click)="toggleView('milestones')" [class.active]="currentView === 'milestones'">
+        <mat-icon>view_module</mat-icon>
+      </button>
+    </mat-toolbar>
+    <button class="add-button" mat-icon-button (click)="openCreateTaskModal()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+  <div *ngIf="currentView === 'milestones'">
+
+    <div class="dashboard">
+      <div class="columns">
+        <div *ngFor="let status of taskStatuses" class="column">
+          <div class="status-name">{{status}} (..)</div>
+          <app-task-card *ngFor="let task of getTasksByStatus(status)" [task]="task"></app-task-card>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <mat-card *ngIf="currentView === 'list'" class="task-list">
+    <!-- List view -->
+    <div class="task-list-header">
+      <span>Name</span>
+      <span>Tags</span>
+      <span>Estimate</span>
+      <span>Assignee</span>
+      <span>Due Date</span>
+    </div>
+    <div *ngFor="let status of taskStatuses">
+      <div class="status-name">{{status}} (2)</div>
+      <div *ngFor="let task of getTasksByStatus(status)" class="task-list-item">
+        <span>{{ task.name }}</span>
+        <span>{{ task.tags.join(', ') }}</span>
+        <span>{{ task.pointEstimate }} Points</span>
+        <span>{{ task.assignee.fullName }}</span>
+        <span>{{ task.dueDate | date }}</span>
+
+      </div>
+    </div>
+  </mat-card>
+
+
+</div>

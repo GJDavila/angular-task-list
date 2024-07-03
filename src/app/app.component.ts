@@ -1,13 +1,19 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { SidebarComponent } from './core/components/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  imports: [
+    RouterModule,
+    CommonModule,
+    SidebarComponent,
+    RouterOutlet,
+    RouterLink,
+  ],
+  styleUrl: './app.component.scss',
 })
-export class AppComponent {
-  title = 'angularChallenge';
-}
+export class AppComponent {}

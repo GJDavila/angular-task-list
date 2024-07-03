@@ -1,0 +1,32 @@
+mat-drawer-container {
+  position: relative;
+  margin: 25px;
+}
+
+.active-link {
+  background: linear-gradient(
+    90deg,
+    rgba(142, 39, 39, 0) 0%,
+    rgba(229, 23, 23, 0.1) 100%
+  );
+}
+
+.mat-mdc-nav-list .mat-mdc-list-item{
+  border-radius: 0%;
+
+}
+
+
+.sidebar-text {
+  color: white;
+}
+
+mat-drawer {
+  background-color: #2c2f33;
+  width: 232px;
+  height: 754px;
+  gap: 0px;
+  border-radius: 24px;
+  position: fixed;
+  margin-top: 15px;
+}
