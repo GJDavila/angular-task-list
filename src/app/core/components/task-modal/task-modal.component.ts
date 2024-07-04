@@ -17,7 +17,6 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
-import { UserService } from '@core/services/user.service';
 import { User } from '@core/models/user.model';
 import { Task } from '@core/models/task.model';
 import { Observable } from 'rxjs';
@@ -64,7 +63,6 @@ export class TaskModalComponent {
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<TaskModalComponent>,
     private store: Store<{ users: fromUser.UserState }>,
-    private userService: UserService,
     @Inject(MAT_DIALOG_DATA) public data: { task?: Task }
   ) {
     this.taskForm = this.fb.group({

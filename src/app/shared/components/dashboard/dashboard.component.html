@@ -17,12 +17,11 @@
   </div>
 
   <div *ngIf="currentView === 'milestones'">
-
     <div class="dashboard">
       <div class="columns">
         <div *ngFor="let status of taskStatuses" class="column">
           <div class="status-name">{{status}} (..)</div>
-          <app-task-card *ngFor="let task of getTasksByStatus(status)" [task]="task"></app-task-card>
+          <app-task-card *ngFor="let task of taskColumns[status]" [task]="task"></app-task-card>
         </div>
       </div>
     </div>
@@ -40,7 +39,7 @@
     </div>
     <div *ngFor="let status of taskStatuses">
       <div class="status-name">{{status}} (2)</div>
-      <div *ngFor="let task of getTasksByStatus(status)" class="task-list-item">
+      <div *ngFor="let task of taskColumns[status]" class="task-list-item">
         <span>{{ task.name }}</span>
         <span>{{ task.tags.join(', ') }}</span>
         <span>{{ task.pointEstimate }} Points</span>

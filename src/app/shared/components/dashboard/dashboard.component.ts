@@ -3,7 +3,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { TaskCardComponent } from '../../../core/components/task-card/task-card.component';
 import { CommonModule } from '@angular/common';
-import { filter, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Task } from '@core/models/task.model';
 import { Store } from '@ngrx/store';
 
@@ -46,7 +46,7 @@ export class DashboardComponent {
   currentView: 'milestones' | 'list' = 'milestones';
 
   tasks$: Observable<Task[]>;
-  taskResult: Task[] = [];
+  taskColumns:  { [key: string]: Task[] } = {};
 
   constructor(
     private dialog: MatDialog,
@@ -55,21 +55,23 @@ export class DashboardComponent {
     this.tasks$ = store.select((state) => state.tasks?.tasks);
   }
 
-  openCreateTaskModal() {
-    this.dialog.open(TaskModalComponent, {});
-  }
-
   ngOnInit(): void {
     const filters = this.currentUser ? { assigneeId: this.currentUser.id } : {};
     this.store.dispatch(TaskActions.loadTasks({ filters }));
 
     this.tasks$.subscribe((tasks) => {
-      this.taskResult = tasks;
+      tasks.forEach((task) => {
+        if (this.taskColumns[task.status]) {
+          this.taskColumns[task.status].push(task);
+        } else {
+          this.taskColumns[task.status] = [task];
+        }
+      });
     });
   }
 
-  getTasksByStatus(status: string) {
-    return this.taskResult?.filter((task) => task.status === status);
+  openCreateTaskModal() {
+    this.dialog.open(TaskModalComponent, {});
   }
 
   onSearch() {
