@@ -18,10 +18,12 @@
 
   <div *ngIf="currentView === 'milestones'">
     <div class="dashboard">
-      <div class="columns">
-        <div *ngFor="let status of taskStatuses" class="column">
-          <div class="status-name">{{status}} (..)</div>
-          <app-task-card *ngFor="let task of taskColumns[status]" [task]="task"></app-task-card>
+      <div class="columns" cdkDropListGroup>
+        <div *ngFor="let status of taskStatuses" class="column" [cdkDropListData]="taskColumns[status]"
+          (cdkDropListDropped)="onChangeStatus($event, status)" [cdkDropList]="status">
+          <div class="status-name">{{status}} ({{taskColumns[status]?.length}})</div>
+          <app-task-card *ngFor="let task of taskColumns[status]" [task]="task" class="example-list" cdkDrag
+            [cdkDragData]="task"></app-task-card>
         </div>
       </div>
     </div>

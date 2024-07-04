@@ -15,7 +15,13 @@ import { TaskModalComponent } from '../../../core/components/task-modal/task-mod
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { User } from '@core/models/user.model';
-
+import {
+  CdkDragDrop,
+  CdkDrag,
+  CdkDropList,
+  CdkDropListGroup,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -27,6 +33,9 @@ import { User } from '@core/models/user.model';
     CommonModule,
     MatToolbarModule,
     MatButtonModule,
+    CdkDropListGroup,
+    CdkDropList,
+    CdkDrag,
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
@@ -46,7 +55,7 @@ export class DashboardComponent {
   currentView: 'milestones' | 'list' = 'milestones';
 
   tasks$: Observable<Task[]>;
-  taskColumns:  { [key: string]: Task[] } = {};
+  taskColumns: { [key: string]: Task[] } = {};
 
   constructor(
     private dialog: MatDialog,
@@ -60,12 +69,16 @@ export class DashboardComponent {
     this.store.dispatch(TaskActions.loadTasks({ filters }));
 
     this.tasks$.subscribe((tasks) => {
+      this.taskColumns = {
+        BACKLOG: [],
+        TODO: [],
+        IN_PROGRESS: [],
+        DONE: [],
+        CANCELLED: [],
+      };
+
       tasks.forEach((task) => {
-        if (this.taskColumns[task.status]) {
-          this.taskColumns[task.status].push(task);
-        } else {
-          this.taskColumns[task.status] = [task];
-        }
+        this.taskColumns[task.status].push(task);
       });
     });
   }
@@ -84,5 +97,27 @@ export class DashboardComponent {
 
   toggleView(view: 'milestones' | 'list'): void {
     this.currentView = view;
+  }
+
+  onChangeStatus(event: CdkDragDrop<string[]>, status: string) {
+    const id = event.item.data.id;
+    const task = {
+      name: event.item.data.name,
+      tags: event.item.data.tags,
+      status: status,
+      pointEstimate: event.item.data.pointEstimate.toString(),
+      dueDate: event.item.data.dueDate, //.toISOString(),
+      assigneeId: event.item.data.assigneeId,
+    };
+
+    if (event.previousContainer !== event.container) {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+      this.store.dispatch(TaskActions.updateTask({ task, id }));
+    }
   }
 }
