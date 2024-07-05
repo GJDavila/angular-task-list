@@ -34,13 +34,6 @@
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-        <mat-form-field class="modal-options" appearance="fill">
-          <mat-label>Status</mat-label>
-          <mat-select formControlName="status">
-            <mat-option *ngFor="let sts of taskStatuses" [value]="sts.value">{{ sts.name }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-
       </div>
       <mat-dialog-actions style="padding: 0;">
         <button mat-button style="color: white;" (click)="onCancel($event)">Cancel</button>

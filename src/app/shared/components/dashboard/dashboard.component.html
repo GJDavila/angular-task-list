@@ -40,7 +40,7 @@
       <span>Due Date</span>
     </div>
     <div *ngFor="let status of taskStatuses">
-      <div class="status-name">{{status}} (2)</div>
+      <div class="status-name">{{status}}  ({{taskColumns[status]?.length}})</div>
       <div *ngFor="let task of taskColumns[status]" class="task-list-item">
         <span>{{ task.name }}</span>
         <span>{{ task.tags.join(', ') }}</span>
